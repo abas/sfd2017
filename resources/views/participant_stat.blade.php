@@ -31,7 +31,7 @@
                                     <!-- <h3 class="jumlahbiodata">0</h3> -->
                                     <p>
                                         <small>
-                                            <b>Your Scores</b>
+                                            <b>Your Point '(^-^)'</b>
                                         </small>
                                     </p>
                                     <h3>{{$participant->point}}</h3>

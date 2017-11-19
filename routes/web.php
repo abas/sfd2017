@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+// Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function(){
     
@@ -50,4 +50,4 @@ Route::group(['prefix'=>'dashboard','middleware'=>'auth'],function(){
 Route::get('/cariaku','ParticipantController@search_username')->name('cariaku');
 Route::post('/cariaku','ParticipantController@show_stat_cari')->name('cariakupost');
 
-Route::get('/statusku/{username}','ParticipantController@show_stat')->name('show_stat');
+Route::get('/statusku/{generate_code}','ParticipantController@show_stat')->name('show_stat');

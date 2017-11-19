@@ -41,15 +41,16 @@ class ParticipantController extends Controller
     {
         
         $data = new Participant();
+        // Generated Code
+        $gen_code = Participant::generated_code($request->username,$request->email,$request->phone);
+        $data->generate_code = $gen_code;
+
         $data->name = $request->name;
         $data->username = $request->username;
         $data->email = $request->email;
         $data->phone = $request->phone;
         $data->reason = $request->reason;
 
-        // Generated Code
-        $gen_code = Participant::generated_code($request->username,$request->email,$request->phone);
-        $data->generate_code = $gen_code;
 
         // Save
         $data->save();
@@ -75,23 +76,21 @@ class ParticipantController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function show_stat($username)
+    public function show_stat($gen_code)
     {
-        $userDec = Participant::decryptIt($username);
-        $participant = Participant::where('username','=',$userDec)->get()->first();
-        $allPart = Participant::All();
-        foreach($allPart as $data){
-            if($participant->id == $data->id){
-                return view('participant_stat',compact('participant'));
-                break;
-            }
+        $gen_codeDec = Participant::decryptIt($gen_code);
+        // dd($gen_codeDec);
+        $isGenCode_Ada = Participant::where('generate_code',$gen_codeDec)->exists();
+        if($isGenCode_Ada){
+            $participant = Participant::where('generate_code','=',$gen_codeDec)->get()->first();
+            return view('participant_stat',compact('participant'));
         }return redirect(route('cariaku'))->with('message','username not found');
     }
 
     public function show_stat_cari(Request $request)
     {
-        $username = Participant::encryptIt($request->username);
-        return redirect(route('show_stat',compact('username')));
+        $gen_code = Participant::encryptIt($request->generate_code);
+        return redirect(route('show_stat',$gen_code));
     }
 
     /**

@@ -47,10 +47,13 @@ class StandController extends Controller
 
     public function addPoint($id, Request $request)
     {
-        $username = $request->username;
-        $participant = Participant::where('username','=',$username)->get()->first();
-        $past = $participant->point;
-        $participant->point = $past + $request->point;
+        $isAda = Participant::where('generate_code',$request->generate_code)->exists();
+        if($isAda){
+            $participant = Participant::where('generate_code','=',$request->generate_code)->get()->first();
+            $participant->point = $participant->point + $request->point;
+        }else{
+            return redirect(route('stand'))->with('isAda','false');
+        }
         $participant->update();
 
         $stand = Stand::find($id);

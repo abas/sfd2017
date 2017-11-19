@@ -1,4 +1,9 @@
 @extends('admin.layouts.app') @section('content')
+@if(session('isAda'))
+<script>
+  alert('code tidak valid! atau salah!')
+</script>
+@endif
 <!-- Main content -->
 <section class="content">
   <!-- Info boxes -->
@@ -78,8 +83,8 @@
           <form action="{{route('addpoint',$mod->id)}}" method="post">
             {{ csrf_field() }}
             <div class="input-group">
-              <span class="input-group-addon">@</span>
-              <input name="username" class="form-control" placeholder="Username" type="text">
+              <span class="input-group-addon"><i class="fa fa-code"></i></span>
+              <input name="generate_code" class="form-control" placeholder="Generated Code" type="text">
             </div>
             <br>
             <div class="input-group">
@@ -93,7 +98,7 @@
               </select>
             </div>
             <br>
-            <button class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            <button type="reset" class="btn btn-danger" data-dismiss="modal">Cancel</button>
             <button type="submit" class="btn btn-primary pull-right">Submit</button>
           </form>
         </div>

@@ -16,8 +16,7 @@ class CreateParticipantTable extends Migration
         Schema::create('participant', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('username')->unique();
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('phone')->unique();
             $table->string('reason')->nullable();
             $table->string('generate_code')->unique();
